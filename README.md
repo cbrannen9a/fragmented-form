@@ -21,6 +21,8 @@ Using Material-UI example [here](https://github.com/mui-org/material-ui/tree/mas
 
 Added basic components with styling, though this lacked validation.
 
+#### TO DO add the validation
+
 ### Deploying to GitHub Pages
 
 Using the excellent tutorial provided [here](https://github.com/gitname/react-gh-pages) by gitname, this is fairly easy.
@@ -31,20 +33,20 @@ Using `create-react-app` once the project is setup
 
 Add the following the your `package.json`
 
-    ```js
-    //...
-    "homepage": "http://{YOUR_GITHUB_USERNAME}.github.io/{YOUR_REPO_NAME}/"
-    ```
+```
+//...
+"homepage": "http://{YOUR_GITHUB_USERNAME}.github.io/{YOUR_REPO_NAME}/"
+```
 
 In the existing `scripts` property, add a `predeploy` property and a `deploy` property, each having the values shown below:
 
-    ```js
-    "scripts": {
-      //...
-      "predeploy": "yarn run build",
-      "deploy": "gh-pages -d build"
-    }
-    ```	
+```
+"scripts": {
+	//...
+	"predeploy": "yarn run build",
+	"deploy": "gh-pages -d build"
+}
+```
 
 Following this when you are ready use
 
