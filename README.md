@@ -1,44 +1,56 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Creating a Fragmented Form with validation in React with Material-UI
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+In this demo I'm creating a react app, using create-react-app, building a checkout form with validation and deploying to GitHub Pages.
 
-### `npm start`
+### Inital setup
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Using `create-react-app` I created a new project `fragmented-form`.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+then added the Material-UI dependencies:
 
-### `npm test`
+```js
+yarn add @material-ui/core @material-ui/icons
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
 
-### `npm run build`
+I then removed `create-react-app`'s css and the starter boilerplate.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Using Material-UI example [here](https://github.com/mui-org/material-ui/tree/master/docs/src/pages/page-layout-examples/checkout)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Added basic components with styling, though this lacked validation.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Deploying to GitHub Pages
 
-### `npm run eject`
+Using the excellent tutorial provided [here](https://github.com/gitname/react-gh-pages) by gitname, this is fairly easy.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Using `create-react-app` once the project is setup
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`yarn add gh-pages --save-dev`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Add the following the your `package.json`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    ```js
+    //...
+    "homepage": "http://{YOUR_GITHUB_USERNAME}.github.io/{YOUR_REPO_NAME}/"
+    ```
 
-## Learn More
+In the existing `scripts` property, add a `predeploy` property and a `deploy` property, each having the values shown below:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ```js
+    "scripts": {
+      //...
+      "predeploy": "yarn run build",
+      "deploy": "gh-pages -d build"
+    }
+    ```	
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Following this when you are ready use
+
+```js
+yarn deploy
+```
+
+to build and update you GitHub page version. 
+Note: This makes a new branch gh-pages in which the built code is located 

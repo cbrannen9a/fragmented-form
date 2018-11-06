@@ -21,7 +21,7 @@
 	"eslintConfig": {
 		"extends": "react-app"
 	},
-	"homepage": "http://cbrannen9a.github.io/fragmented-form",
+	"homepage": "http://cbrannen9a.github.io/fragmented-form/",
 	"browserslist": [
 		">0.2%",
 		"not dead",
