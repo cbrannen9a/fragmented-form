@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/fragmented-form/precache-manifest.ab548d8ac47c061951e1d875615a06f1.js"
+  "/fragmented-form/precache-manifest.ed50544d9a81e24037340c1eb6f3f5dd.js"
 );
 
 workbox.clientsClaim();
