@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import { fieldValidator } from './fieldValidator';
 
 const styles = theme => ({
 	appBar: {
@@ -53,23 +54,117 @@ const styles = theme => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step) {
-	switch (step) {
-		case 0:
-			return <AddressForm />;
-		case 1:
-			return <PaymentForm />;
-		case 2:
-			return <Review />;
-		default:
-			throw new Error('Unknown step');
-	}
-}
+
 
 class Checkout extends React.Component {
 	state = {
 		activeStep: 0,
+		addressForm: {
+			firstName: '',
+			lastName: '',
+			address1: '',
+			address2: '',
+			city: '',
+			state: '',
+			zip: '',
+			country: '',
+		},
+		paymentForm: {
+			cardName: '',
+			cardNumber: '',
+			expDate: '',
+			cvv: '',
+		},
+		products: [
+			{ name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
+			{ name: 'Product 2', desc: 'Another thing', price: '$3.47' },
+			{ name: 'Product 3', desc: 'Something else', price: '$6.51' },
+			{ name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
+
+		],
+		validation: {
+			hasErrorAddressForm: true,
+			hasErrorPaymentForm: true,
+			errorTypes: {}
+		}
 	};
+
+	handleChange = (name, area) => event => {
+		const value = event.target.value;
+		this.setState({
+			[area]: {
+				...this.state[area],
+				[name]: value
+			}
+		}, () => { this.handleValidation(name, value); });
+	}
+
+	handleValidation = (name, value) => {
+		let [v, m] = fieldValidator(name, value);
+
+		this.setState({
+			validation: {
+				...this.state.validation,
+				errorTypes: {
+					...this.state.validation.errorTypes,
+					[name]: m
+				},
+				[name]: v,
+
+			}
+		}, this.handleFormValidation);
+	}
+
+	handleFormValidation = () => {
+		const { validation } = this.state;
+		this.setState({
+			validation: {
+				...validation,
+				hasErrorAddressForm: !this.state.validation.firstName
+					|| !this.state.validation.lastName
+					|| !this.state.validation.address1
+					|| !this.state.validation.city
+					|| !this.state.validation.zip
+					|| !this.state.validation.country,
+				hasErrorPaymentForm: !this.state.validation.cardName
+					|| !this.state.validation.cardNumber
+					|| !this.state.validation.expDate
+					|| !this.state.validation.cvv
+			}
+		});
+	}
+
+	handleValid = () => {
+		const { activeStep, validation } = this.state;
+		if (activeStep === 0 && !validation.hasErrorAddressForm) {
+			return false;
+		} else if (activeStep === 1 && !validation.hasErrorPaymentForm) {
+			return false;
+		} else if (activeStep === 2) {
+			return false;
+		}
+		return true;
+	}
+
+	getStepContent = (step) => {
+		switch (step) {
+			case 0:
+				return <AddressForm
+					state={this.state}
+					handleChange={this.handleChange}
+				/>;
+			case 1:
+				return <PaymentForm state={this.state}
+					handleChange={this.handleChange}
+				/>;
+			case 2:
+				return <Review state={this.state}
+					handleChange={this.handleChange}
+				/>;
+			default:
+				throw new Error('Unknown step');
+		}
+	}
 
 	handleNext = () => {
 		this.setState(state => ({
@@ -128,7 +223,7 @@ class Checkout extends React.Component {
 								</React.Fragment>
 							) : (
 									<React.Fragment>
-										{getStepContent(activeStep)}
+										{this.getStepContent(activeStep)}
 										<div className={classes.buttons}>
 											{activeStep !== 0 && (
 												<Button onClick={this.handleBack} className={classes.button}>
@@ -140,6 +235,7 @@ class Checkout extends React.Component {
 												color="primary"
 												onClick={this.handleNext}
 												className={classes.button}
+												disabled={this.handleValid()}
 											>
 												{activeStep === steps.length - 1 ? 'Place order' : 'Next'}
 											</Button>

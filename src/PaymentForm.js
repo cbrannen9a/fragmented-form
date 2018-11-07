@@ -2,38 +2,70 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
-function PaymentForm() {
+function PaymentForm(props) {
+	const { state, handleChange } = props;
 	return (
 		<React.Fragment>
 			<Typography variant="h6" gutterBottom>
 				Payment method
-      </Typography>
+			</Typography>
 			<Grid container spacing={24}>
 				<Grid item xs={12} md={6}>
-					<TextField required id="cardName" label="Name on card" fullWidth />
+					<TextField
+						required
+						id="cardName"
+						label="Name on card"
+						fullWidth
+						value={state.paymentForm.cardName}
+						onChange={handleChange('cardName', 'paymentForm')}
+						error={!state.validation.cardName}
+						helperText={state.validation.errorTypes.cardName}
+					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<TextField required id="cardNumber" label="Card number" fullWidth />
+					<TextField
+						required
+						id="cardNumber"
+						label="Card number"
+						fullWidth
+						value={state.paymentForm.cardNumber}
+						onChange={handleChange('cardNumber', 'paymentForm')}
+						error={!state.validation.cardNumber}
+						helperText={state.validation.errorTypes.cardNumber}
+					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<TextField required id="expDate" label="Expiry date" fullWidth />
+					<TextField
+						required
+						id="expDate"
+						label="Expiry date (MM/YY)"
+						fullWidth
+						inputProps={{
+							maxLength: 5,
+						}}
+						value={state.paymentForm.expDate}
+						onChange={handleChange('expDate', 'paymentForm')}
+						error={!state.validation.expDate}
+						helperText={state.validation.errorTypes.expDate}
+					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<TextField
 						required
 						id="cvv"
 						label="CVV"
-						helperText="Last three digits on signature strip"
+						inputProps={{
+							maxLength: 3,
+						}}
+						helperText={
+							(!state.validation.errorTypes.cvv
+								|| state.validation.errorTypes.cvv.length === 0)
+								? "Last three digits on signature strip" : state.validation.errorTypes.cvv}
 						fullWidth
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<FormControlLabel
-						control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-						label="Remember credit card details for next time"
+						value={state.paymentForm.cvv}
+						onChange={handleChange('cvv', 'paymentForm')}
+						error={!state.validation.cvv}
 					/>
 				</Grid>
 			</Grid>

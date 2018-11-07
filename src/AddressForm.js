@@ -2,10 +2,10 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
-function AddressForm() {
+function AddressForm(props) {
+	const { state, handleChange } = props;
+
 	return (
 		<React.Fragment>
 			<Typography variant="h6" gutterBottom>
@@ -20,6 +20,10 @@ function AddressForm() {
 						label="First name"
 						fullWidth
 						autoComplete="fname"
+						value={state.addressForm.firstName}
+						onChange={handleChange('firstName', 'addressForm')}
+						error={!state.validation.firstName}
+						helperText={state.validation.errorTypes.firstName}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
@@ -30,6 +34,10 @@ function AddressForm() {
 						label="Last name"
 						fullWidth
 						autoComplete="lname"
+						value={state.addressForm.lastName}
+						onChange={handleChange('lastName', 'addressForm')}
+						error={!state.validation.lastName}
+						helperText={state.validation.errorTypes.lastName}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -40,6 +48,10 @@ function AddressForm() {
 						label="Address line 1"
 						fullWidth
 						autoComplete="billing address-line1"
+						value={state.addressForm.address1}
+						onChange={handleChange('address1', 'addressForm')}
+						error={!state.validation.address1}
+						helperText={state.validation.errorTypes.address1}
 					/>
 				</Grid>
 				<Grid item xs={12}>
@@ -49,6 +61,8 @@ function AddressForm() {
 						label="Address line 2"
 						fullWidth
 						autoComplete="billing address-line2"
+						value={state.addressForm.address2}
+						onChange={handleChange('address2', 'addressForm')}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
@@ -59,10 +73,21 @@ function AddressForm() {
 						label="City"
 						fullWidth
 						autoComplete="billing address-level2"
+						value={state.addressForm.city}
+						onChange={handleChange('city', 'addressForm')}
+						error={!state.validation.city}
+						helperText={state.validation.errorTypes.city}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					<TextField id="state" name="state" label="State/Province/Region" fullWidth />
+					<TextField
+						id="state"
+						name="state"
+						label="State/Province/Region"
+						fullWidth
+						value={state.addressForm.state}
+						onChange={handleChange('state', 'addressForm')}
+					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
 					<TextField
@@ -72,6 +97,10 @@ function AddressForm() {
 						label="Zip / Postal code"
 						fullWidth
 						autoComplete="billing postal-code"
+						value={state.addressForm.zip}
+						onChange={handleChange('zip', 'addressForm')}
+						error={!state.validation.zip}
+						helperText={state.validation.errorTypes.zip}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={6}>
@@ -82,12 +111,10 @@ function AddressForm() {
 						label="Country"
 						fullWidth
 						autoComplete="billing country"
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<FormControlLabel
-						control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-						label="Use this address for payment details"
+						value={state.addressForm.country}
+						onChange={handleChange('country', 'addressForm')}
+						error={!state.validation.country}
+						helperText={state.validation.errorTypes.country}
 					/>
 				</Grid>
 			</Grid>
