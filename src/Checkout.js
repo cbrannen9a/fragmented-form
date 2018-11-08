@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-import { fieldValidator } from './fieldValidator';
+import { fieldValidator, formValidator } from './fieldValidator';
 
 const styles = theme => ({
 	appBar: {
@@ -56,7 +56,7 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 
 
-class Checkout extends React.Component {
+class Checkout extends Component {
 	state = {
 		activeStep: 0,
 		addressForm: {
@@ -120,16 +120,8 @@ class Checkout extends React.Component {
 		this.setState({
 			validation: {
 				...validation,
-				hasErrorAddressForm: !this.state.validation.firstName
-					|| !this.state.validation.lastName
-					|| !this.state.validation.address1
-					|| !this.state.validation.city
-					|| !this.state.validation.zip
-					|| !this.state.validation.country,
-				hasErrorPaymentForm: !this.state.validation.cardName
-					|| !this.state.validation.cardNumber
-					|| !this.state.validation.expDate
-					|| !this.state.validation.cvv
+				hasErrorAddressForm: formValidator(validation, 'addressForm'),
+				hasErrorPaymentForm: formValidator(validation, 'paymentForm'),
 			}
 		});
 	}
@@ -189,7 +181,7 @@ class Checkout extends React.Component {
 		const { activeStep } = this.state;
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<CssBaseline />
 				<AppBar position="absolute" color="default" className={classes.appBar}>
 					<Toolbar>
@@ -210,9 +202,9 @@ class Checkout extends React.Component {
 								</Step>
 							))}
 						</Stepper>
-						<React.Fragment>
+						<Fragment>
 							{activeStep === steps.length ? (
-								<React.Fragment>
+								<Fragment>
 									<Typography variant="h5" gutterBottom>
 										Thank you for your order.
                   </Typography>
@@ -220,9 +212,9 @@ class Checkout extends React.Component {
 										Your order number is #2001539. We have emailed your order confirmation, and will
 										send you an update when your order has shipped.
                   </Typography>
-								</React.Fragment>
+								</Fragment>
 							) : (
-									<React.Fragment>
+									<Fragment>
 										{this.getStepContent(activeStep)}
 										<div className={classes.buttons}>
 											{activeStep !== 0 && (
@@ -240,12 +232,12 @@ class Checkout extends React.Component {
 												{activeStep === steps.length - 1 ? 'Place order' : 'Next'}
 											</Button>
 										</div>
-									</React.Fragment>
+									</Fragment>
 								)}
-						</React.Fragment>
+						</Fragment>
 					</Paper>
 				</main>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 }

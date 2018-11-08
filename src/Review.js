@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -19,10 +19,16 @@ const styles = theme => ({
 	},
 });
 
+const ccFormatter = (value) => {
+	return value.substring(0, 4) +
+		'-XXXX-XXXX-' +
+		value.substring(12, 16);
+}
+
 function Review(props) {
 	const { state, classes } = props;
 	return (
-		<React.Fragment>
+		<Fragment>
 			<Typography variant="h6" gutterBottom>
 				Order summary
 			</Typography>
@@ -37,36 +43,32 @@ function Review(props) {
 					<ListItemText primary="Total" />
 					<Typography variant="subtitle1" className={classes.total}>
 						$34.06
-          </Typography>
+          			</Typography>
 				</ListItem>
 			</List>
 			<Grid container spacing={16}>
 				<Grid item xs={12} sm={6}>
 					<Typography variant="h6" gutterBottom className={classes.title}>
 						Shipping
-          </Typography>
+          			</Typography>
 					<Typography gutterBottom>{state.addressForm.firstName} {state.addressForm.lastName}</Typography>
-
+					<Typography gutterBottom>{state.addressForm.address1}</Typography>
+					<Typography gutterBottom>{state.addressForm.address2}</Typography>
+					<Typography gutterBottom>{state.addressForm.city}</Typography>
+					<Typography gutterBottom>{state.addressForm.state}</Typography>
+					<Typography gutterBottom>{state.addressForm.zip}</Typography>
+					<Typography gutterBottom>{state.addressForm.country}</Typography>
 				</Grid>
 				<Grid item container direction="column" xs={12} sm={6}>
 					<Typography variant="h6" gutterBottom className={classes.title}>
 						Payment details
-          </Typography>
-					<Grid container>
-						{/* {state.paymentForm.map(payment => (
-							<React.Fragment key={payment.name}>
-								<Grid item xs={6}>
-									<Typography gutterBottom>{payment.cardName}</Typography>
-								</Grid>
-								<Grid item xs={6}>
-									<Typography gutterBottom>{payment.detail}</Typography>
-								</Grid>
-							</React.Fragment>
-						))} */}
-					</Grid>
+          			</Typography>
+					<Typography gutterBottom>{state.paymentForm.cardName}</Typography>
+					<Typography gutterBottom>{ccFormatter(state.paymentForm.cardNumber)}</Typography>
+					<Typography gutterBottom>{state.paymentForm.expDate}</Typography>
 				</Grid>
 			</Grid>
-		</React.Fragment>
+		</Fragment>
 	);
 }
 

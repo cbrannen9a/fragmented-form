@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -7,10 +7,10 @@ function AddressForm(props) {
 	const { state, handleChange } = props;
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			<Typography variant="h6" gutterBottom>
 				Shipping address
-      </Typography>
+      		</Typography>
 			<Grid container spacing={24}>
 				<Grid item xs={12} sm={6}>
 					<TextField
@@ -118,7 +118,7 @@ function AddressForm(props) {
 					/>
 				</Grid>
 			</Grid>
-		</React.Fragment>
+		</Fragment>
 	);
 }
 

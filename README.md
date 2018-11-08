@@ -21,7 +21,13 @@ Using Material-UI example [here](https://github.com/mui-org/material-ui/tree/mas
 
 Added basic components with styling, though this lacked validation.
 
-#### TO DO add the validation
+### Adding Validation
+
+I hit issue with using Fragments and state with validation the solution I've used here is passing the state property of the main `Checkout.js` to the fragments along with function which fires changes to respective fields. As if the are part of this main component which in this example seems ok as the AddressForm, PaymentForm and Review are all fragments of this larger whole.
+
+The validation of the forms and fields occurs in the `fieldValidator.js` to limit the places needed to update if new fields need adding, it also allows you to easily change out the validation methods, such as altering the credit card validation.
+
+NOTE: An example card passing that function is 4242424242424242
 
 ### Deploying to GitHub Pages
 
@@ -37,6 +43,9 @@ Add the following the your `package.json`
 //...
 "homepage": "http://{YOUR_GITHUB_USERNAME}.github.io/{YOUR_REPO_NAME}/"
 ```
+
+In this case http://cbrannen9a.github.io/fragmented-form/
+
 
 In the existing `scripts` property, add a `predeploy` property and a `deploy` property, each having the values shown below:
 

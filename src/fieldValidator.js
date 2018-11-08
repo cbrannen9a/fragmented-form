@@ -130,3 +130,23 @@ export const fieldValidator = (name, value) => {
 
 	return [valid, message];
 };
+
+export const formValidator = (validation, area) => {
+	if (area === 'addressForm') {
+		return !validation.firstName
+			|| !validation.lastName
+			|| !validation.address1
+			|| !validation.city
+			|| !validation.zip
+			|| !validation.country
+	}
+
+	if (area === 'paymentForm') {
+		return !validation.cardName
+			|| !validation.cardNumber
+			|| !validation.expDate
+			|| !validation.cvv
+	}
+
+	return true;
+}

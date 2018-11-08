@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 function PaymentForm(props) {
 	const { state, handleChange } = props;
 	return (
-		<React.Fragment>
+		<Fragment>
 			<Typography variant="h6" gutterBottom>
 				Payment method
 			</Typography>
@@ -61,7 +61,8 @@ function PaymentForm(props) {
 						helperText={
 							(!state.validation.errorTypes.cvv
 								|| state.validation.errorTypes.cvv.length === 0)
-								? "Last three digits on signature strip" : state.validation.errorTypes.cvv}
+								? "Last three digits on signature strip"
+								: state.validation.errorTypes.cvv}
 						fullWidth
 						value={state.paymentForm.cvv}
 						onChange={handleChange('cvv', 'paymentForm')}
@@ -69,7 +70,7 @@ function PaymentForm(props) {
 					/>
 				</Grid>
 			</Grid>
-		</React.Fragment>
+		</Fragment>
 	);
 }
 
